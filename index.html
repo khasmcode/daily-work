@@ -1,105 +1,200 @@
 <!DOCTYPE html>
 <html lang="km">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>វេនសម្អាតប្រចាំថ្ងៃ</title>
-<link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>វេនសម្អាតប្រចាំថ្ងៃ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<main class="container">
+  <main class="container">
 
-  <header class="page-header">
-    <span class="eyebrow">🧹 កាលវិភាគសម្អាត</span>
-    <h1>វេនសម្អាតប្រចាំថ្ងៃ</h1>
-    <div class="underline"></div>
-    <p id="currentDate"></p>
-  </header>
+    <header class="page-header">
+      <span class="eyebrow">🧹 កាលវិភាគសម្អាត</span>
+      <h1>វេនសម្អាតប្រចាំថ្ងៃ</h1>
+      <div class="underline"></div>
+      <p id="currentDate"></p>
+    </header>
 
-  <section class="card form-card">
-    <form id="dailyWorkForm">
-      <div class="form-grid">
+    <section class="card form-card">
+      <form id="dailyWorkForm">
 
-        <div class="form-group">
-          <label for="daySelect">ថ្ងៃសម្អាត<span class="required">*</span></label>
-          <select id="daySelect"></select>
-          <small>ជ្រើសរើសថ្ងៃសម្អាតរបស់អ្នក</small>
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="daySelect">
+              ថ្ងៃសម្អាត<span class="required">*</span>
+            </label>
+
+            <select id="daySelect"></select>
+
+            <small>ជ្រើសរើសថ្ងៃសម្អាតរបស់អ្នក</small>
+          </div>
+
+          <div class="form-group">
+            <label for="responsibility">
+              ការងារ<span class="required">*</span>
+            </label>
+
+            <select
+              id="responsibility"
+              name="responsibility"
+              required
+            ></select>
+          </div>
+
+          <div class="form-group full-width">
+            <label>
+              អ្នកទទួលខុសត្រូវ<span class="required">*</span>
+            </label>
+
+            <div id="memberPicker" class="member-picker"></div>
+
+            <small>
+              សូម ✓ ឈ្មោះអ្នកទទួលខុសត្រូវសម្រាប់ការងារនេះ។
+              ចុច "ច្បាប់" បើសមាជិកម្នាក់ណាសុំច្បាប់។
+            </small>
+          </div>
+
         </div>
 
-        <div class="form-group">
-          <label for="responsibility">ការងារ<span class="required">*</span></label>
-          <select id="responsibility" name="responsibility" required></select>
+        <div class="form-actions">
+          <button
+            type="button"
+            id="submitButton"
+            class="btn btn-primary"
+            onclick="addRow()"
+          >
+            ＋ បន្ថែមការងារ
+          </button>
+
+          <button
+            type="button"
+            id="cancelEditButton"
+            class="btn btn-secondary"
+            onclick="cancelEdit()"
+            style="display: none;"
+          >
+            បោះបង់ការកែប្រែ
+          </button>
+
+          <button
+            type="reset"
+            class="btn btn-light"
+          >
+            សម្អាត
+          </button>
         </div>
 
-        <div class="form-group full-width">
-          <label>អ្នកទទួលខុសត្រូវ<span class="required">*</span></label>
-          <div id="memberPicker" class="member-picker"></div>
-          <small>សូម ✓ ឈ្មោះអ្នកទទួលខុសត្រូវសម្រាប់ការងារនេះ។ ចុច "ច្បាប់" បើសមាជិកម្នាក់ណាសុំច្បាប់។</small>
+      </form>
+    </section>
+
+    <section class="card table-card document-style">
+
+      <div class="letterhead">
+
+        <div class="letterhead-brand">
+
+          <img
+            class="brand-logo"
+            src="/image/logo1.png"
+            alt="logo"
+          >
+
+          <div class="brand-name">
+            <p class="brand-name-km">
+              សមាគមទាយាទខ្មែរ
+            </p>
+
+            <p class="brand-name-en">
+              KHMER HEIRS ASSOCIATION
+            </p>
+          </div>
+
+        </div>
+
+        <span></span>
+
+        <div class="letterhead-title">
+          <h2>វេនសម្អាតប្រចាំថ្ងៃ</h2>
+          <p id="previewDate"></p>
         </div>
 
       </div>
 
-      <div class="form-actions">
-        <button type="button" id="submitButton" class="btn btn-primary" onclick="addRow()">＋ បន្ថែមការងារ</button>
-        <button type="button" id="cancelEditButton" class="btn btn-secondary" onclick="cancelEdit()" style="display: none;">បោះបង់ការកែប្រែ</button>
-        <button type="reset" class="btn btn-light">សម្អាត</button>
+      <div class="letterhead-divider">
+        <span>◆</span>
+        <span>◆</span>
+        <span>◆</span>
+        <span>◆</span>
+        <span>◆</span>
+        <span>◆</span>
+        <span>◆</span>
       </div>
-    </form>
-  </section>
 
-  <section class="card table-card document-style">
-    <div class="letterhead">
-      <div class="letterhead-brand">
-        <img class= "brand-logo" src="/image/logo1.png" alt="logo">
-        <div class="brand-name">
-          <p class="brand-name-km">សមាគមទាយាទខ្មែរ</p>
-          <p class="brand-name-en">KHMER HEIRS ASSOCIATION</p>
+      <div class="table-wrapper">
+
+        <table id="dataTable">
+
+          <thead>
+            <tr>
+              <th>ល.រ</th>
+              <th>គោត្តនាម និងនាម</th>
+              <th>ភារកិច្ច</th>
+              <th>ផ្សេងៗ</th>
+            </tr>
+          </thead>
+
+          <tbody id="tableBody"></tbody>
+
+        </table>
+
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">🧹</div>
+
+          <h3>មិនទាន់មានការងារ</h3>
+
+          <p>
+            សូមបញ្ចូលអ្នកទទួលខុសត្រូវ និងការងារ
+          </p>
         </div>
+
       </div>
-      <Span></Span>
-      <div class="letterhead-title">
-        <h2>វេនសម្អាតប្រចាំថ្ងៃ</h2>
-        <p id="previewDate"></p>
-      </div>
-    </div>
 
-    <div class="letterhead-divider">
-      <span>◆</span><span>◆</span><span>◆</span><span>◆</span><span>◆</span><span>◆</span><span>◆</span>
-    </div>
+      <p class="letterhead-footer">
+        អ្នកជាបុគ្គលសំខាន់!
+      </p>
 
-    <div class="table-wrapper">
-      <table id="dataTable">
-        <thead>
-          <tr>
-            <th>ល.រ</th>
-            <th>គោត្តនាម និងនាម</th>
-            <th>ភារកិច្ច</th>
-            <th>ផ្សេងៗ</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
+    </section>
 
-      <div id="emptyState" class="empty-state">
-        <div class="empty-icon">🧹</div>
-        <h3>មិនទាន់មានការងារ</h3>
-        <p>សូមបញ្ចូលអ្នកទទួលខុសត្រូវ និងការងារ</p>
-      </div>
-    </div>
+    <section class="download-actions">
 
-    <p class="letterhead-footer">អ្នកជាបុគ្គលសំខាន់!</p>
-  </section>
+      <button
+        type="button"
+        class="btn btn-success"
+        onclick="downloadAsImage()"
+      >
+        ទាញយកជារូបភាព
+      </button>
 
-  <section class="download-actions">
-    <button type="button" class="btn btn-success" onclick="downloadAsImage()">ទាញយកជារូបភាព</button>
-    <button type="button" class="btn btn-danger" onclick="downloadAsPDF()">ទាញយកជា PDF</button>
-  </section>
+      <button
+        type="button"
+        class="btn btn-danger"
+        onclick="downloadAsPDF()"
+      >
+        ទាញយកជា PDF
+      </button>
 
-</main>
+    </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="script.js"></script>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script src="script.js"></script>
 </body>
 </html>

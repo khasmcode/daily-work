@@ -1,3 +1,4 @@
+
 :root {
   --ink: #1f3a34;
   --ink-soft: #4b6b63;
@@ -82,7 +83,11 @@ body {
   height: 4px;
   margin: 14px auto 0;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--mint), var(--gold));
+  background: linear-gradient(
+    90deg,
+    var(--mint),
+    var(--gold)
+  );
 }
 
 #currentDate {
@@ -106,7 +111,10 @@ body {
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(
+    2,
+    minmax(0, 1fr)
+  );
   gap: 20px;
 }
 
@@ -157,7 +165,8 @@ textarea::placeholder {
 textarea:focus {
   border-color: var(--mint);
   background: var(--card);
-  box-shadow: 0 0 0 4px rgba(63, 143, 120, 0.12);
+  box-shadow:
+    0 0 0 4px rgba(63, 143, 120, 0.12);
 }
 
 .form-group small {
@@ -186,7 +195,8 @@ select {
 select:focus {
   border-color: var(--mint);
   background: var(--card);
-  box-shadow: 0 0 0 4px rgba(63, 143, 120, 0.12);
+  box-shadow:
+    0 0 0 4px rgba(63, 143, 120, 0.12);
 }
 
 .member-picker {
@@ -307,7 +317,8 @@ select:focus {
 .btn-primary {
   background: var(--mint);
   color: #ffffff;
-  box-shadow: 0 6px 16px rgba(63, 143, 120, 0.28);
+  box-shadow:
+    0 6px 16px rgba(63, 143, 120, 0.28);
 }
 
 .btn-primary:hover {
@@ -356,11 +367,6 @@ select:focus {
   margin-bottom: 26px;
 }
 
-
-/* =========================================
-   LETTERHEAD
-   ========================================= */
-
 .letterhead {
   display: flex;
   flex-direction: column;
@@ -371,9 +377,6 @@ select:focus {
   margin-bottom: 20px;
 }
 
-
-/* Logo + Organization */
-
 .letterhead-brand {
   display: flex;
   flex-direction: column;
@@ -382,9 +385,6 @@ select:focus {
   gap: 8px;
   text-align: center;
 }
-
-
-/* Logo */
 
 .brand-logo {
   width: 70px;
@@ -396,9 +396,6 @@ select:focus {
   display: block;
   background: #ffffff;
 }
-
-
-/* Organization name */
 
 .brand-name {
   display: flex;
@@ -423,9 +420,6 @@ select:focus {
   color: var(--ink-soft);
 }
 
-
-/* Title + Date */
-
 .letterhead-title {
   display: flex;
   flex-direction: column;
@@ -447,9 +441,6 @@ select:focus {
   font-size: 13px;
 }
 
-
-/* Divider */
-
 .letterhead-divider {
   display: flex;
   justify-content: center;
@@ -459,9 +450,6 @@ select:focus {
   font-size: 10px;
 }
 
-
-/* Footer */
-
 .letterhead-footer {
   margin: 16px 4px 0;
   text-align: right;
@@ -469,11 +457,6 @@ select:focus {
   font-size: 14px;
   color: var(--ink);
 }
-
-
-/* =========================================
-   TABLE
-   ========================================= */
 
 .table-wrapper {
   width: 100%;
@@ -484,20 +467,24 @@ table {
   width: 100%;
   border-collapse: collapse;
   border: 1.5px solid var(--ink);
+  table-layout: fixed;
 }
 
 thead th {
+  height: 48px;
+  padding: 8px 14px;
   text-align: left;
+  vertical-align: middle;
   font-size: 13px;
   font-weight: 800;
   color: var(--ink);
-  padding: 10px 14px;
   white-space: nowrap;
   background: #f2f4f2;
   border: 1.5px solid var(--ink);
 }
 
 tbody tr {
+  height: 48px;
   cursor: pointer;
   background: #ffffff;
   transition: background 0.15s ease;
@@ -512,10 +499,11 @@ tbody tr:hover {
 }
 
 tbody td {
-  padding: 12px 14px;
+  height: 48px;
+  padding: 8px 14px;
   font-size: 14px;
   color: var(--ink);
-  vertical-align: top;
+  vertical-align: middle;
   border: 1.5px solid var(--ink);
 }
 
@@ -542,8 +530,10 @@ tbody td {
 }
 
 .responsibility {
-  white-space: pre-line;
-  line-height: 1.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
 }
 
 .member-picker-empty {
@@ -553,11 +543,6 @@ tbody td {
   font-size: 13px;
   text-align: center;
 }
-
-
-/* =========================================
-   EMPTY STATE
-   ========================================= */
 
 .empty-state {
   text-align: center;
@@ -582,21 +567,11 @@ tbody td {
   font-size: 14px;
 }
 
-
-/* =========================================
-   DOWNLOAD ACTIONS
-   ========================================= */
-
 .download-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
 }
-
-
-/* =========================================
-   RESPONSIVE
-   ========================================= */
 
 @media (max-width: 720px) {
 
@@ -629,9 +604,6 @@ tbody td {
     justify-content: center;
   }
 
-
-  /* Letterhead remains vertical */
-
   .letterhead {
     flex-direction: column;
     align-items: center;
@@ -657,16 +629,10 @@ tbody td {
     text-align: center;
   }
 
-
-  /* Mobile logo */
-
   .brand-logo {
     width: 64px;
     height: 64px;
   }
-
-
-  /* Mobile organization text */
 
   .brand-name-km {
     font-size: 16px;
@@ -684,9 +650,6 @@ tbody td {
     font-size: 12px;
   }
 
-
-  /* Mobile table */
-
   table,
   thead,
   tbody,
@@ -701,17 +664,21 @@ tbody td {
   }
 
   tbody tr {
+    height: auto;
     margin-bottom: 14px;
     border-radius: var(--radius-md);
     border: 1px solid var(--line);
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(31, 58, 52, 0.05);
+    box-shadow:
+      0 2px 8px rgba(31, 58, 52, 0.05);
   }
 
   tbody td {
+    height: auto;
+    min-height: 48px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 14px;
     border: none;
     border-bottom: 1px solid #eef1ef;
@@ -729,12 +696,77 @@ tbody td {
     min-width: 100px;
     flex-shrink: 0;
   }
+
+  .responsibility {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.5;
+    text-align: right;
+  }
 }
 
+.export-mode table {
+  width: 100% !important;
+  display: table !important;
+  border-collapse: collapse !important;
+  table-layout: fixed !important;
+}
 
-/* =========================================
-   PRINT
-   ========================================= */
+.export-mode thead {
+  display: table-header-group !important;
+}
+
+.export-mode tbody {
+  display: table-row-group !important;
+}
+
+.export-mode tr {
+  display: table-row !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+}
+
+.export-mode th {
+  display: table-cell !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 8px 14px !important;
+  vertical-align: middle !important;
+}
+
+.export-mode td {
+  display: table-cell !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 8px 14px !important;
+  vertical-align: middle !important;
+  border: 1.5px solid var(--ink) !important;
+}
+
+.export-mode tbody td::before {
+  content: none !important;
+}
+
+.export-mode tbody tr {
+  background: #ffffff !important;
+}
+
+.export-mode .table-wrapper {
+  overflow: visible !important;
+}
+
+.export-mode .responsibility {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.4 !important;
+}
 
 @media print {
 
