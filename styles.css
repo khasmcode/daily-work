@@ -1,136 +1,438 @@
-/* General Styles */
-body {
-    font-family: 'Khim Sonny', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+
+* {
+    box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family:
+        "Kantumruy Pro",
+        "Khim Sonny",
+        sans-serif;
+
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+
+
 .container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 50px auto;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: min(95%, 1200px);
+    margin: 40px auto;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    margin: 0;
+
+    font-family:
+        "Kantumruy Pro",
+        "Khim Sonny",
+        sans-serif;
+
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.page-header p {
+    margin: 8px 0 0;
+    color: #6b7280;
+    font-size: 15px;
+}
+
+
+.form-card,
+.table-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.form-group label span {
+    color: #dc2626;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #111827;
+    font-family:
+        "Kantumruy Pro",
+        "Khim Sonny",
+        sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus { 
+    border-color: #2563eb; 
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    border: none;
+    padding: 11px 18px;
+    border-radius: 9px;
+    font-family: "Kantumruy Pro", "Khim Sonny", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+    transform 0.15s ease,
+    opacity 0.15s ease, background 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+
+.btn-success {
+    background: #16a34a;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #15803d;
+}
+
+
+.btn-danger {
+    background: #dc2626;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+}
+
+.delete-btn {
+    border: none;
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 7px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-family: "Kantumruy Pro", "Khim Sonny",msans-serif;
+    font-weight: 600;
+}
+
+.delete-btn:hover {
+    background: #fecaca;
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.table-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #111827;
+}
+.table-header p {
+    margin: 5px 0 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
     border-radius: 10px;
 }
 
-h1 {
-    text-align: center;
-    color: #333;
-    font-family: 'Khim Sonny', sans-serif;
-    font-weight: bold;
+thead {
+    background: #f8fafc;
 }
 
-/* Form Styles */
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-}
-
-input[type="text"], textarea, select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: 'Khim Sonny', sans-serif;
-}
-
-button {
-    padding: 10px 20px;
-    margin-right: 10px;
-    border: none;
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: 'Khim Sonny', sans-serif;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-/* Table Styles */
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid #ddd;
-}
-
-th, td {
-    padding: 10px;
+th,
+td {
+    padding: 13px 14px;
     text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+    vertical-align: top;
 }
 
 th {
-    background-color: #f8f9fa;
-    font-weight: bold;
+    color: #374151;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
 td {
-    background-color: #fff;
+    background: #ffffff;
+    color: #4b5563;
+    line-height: 1.6;
 }
 
-/* Status Styles */
-.status-pending {
-    color: #ffc107;
-    font-weight: bold;
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
-.status-completed {
-    color: #28a745;
-    font-weight: bold;
+tbody tr:hover td {
+    background: #f9fafb;
 }
 
-/* Responsive Design */
+
+
+.number-column {
+    width: 70px;
+    text-align: center;
+}
+
+
+td:first-child {
+    text-align: center;
+}
+
+
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #6b7280;
+}
+
+.empty-icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.empty-state h3 {
+    margin: 0 0 5px;
+    color: #374151;
+    font-size: 18px;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.download-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+
+
 @media (max-width: 768px) {
+
     .container {
-        width: 100%;
-        padding: 10px;
+        width: 94%;
+        margin: 25px auto;
     }
 
-    table, thead, tbody, th, td, tr {
+    .page-header h1 {
+        font-size: 26px;
+    }
+
+    .form-card,
+    .table-card {
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+
+    .download-actions {
+        flex-direction: column;
+    }
+
+    .download-actions .btn {
+        width: 100%;
+    }
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
         display: block;
     }
 
-    th {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
+    thead {
+        display: none;
     }
 
-    tr {
-        border: 1px solid #ccc;
+    table {
+        border: none;
+    }
+
+    tbody tr {
+        margin-bottom: 15px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     td {
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding-left: 50%;
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 12px;
     }
 
-    td:before {
-        position: absolute;
-        top: 6px;
-        left: 6px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
+    td:last-child {
+        border-bottom: none;
+    }
+
+    td::before {
         content: attr(data-label);
-        font-weight: bold;
+        font-weight: 700;
+        color: #374151;
+        min-width: 80px;
+    }
+
+    td:first-child {
+        text-align: left;
+    }
+
+    .number-column {
+        width: auto;
+    }
+}
+
+@media print {
+
+    body {
+        background: white;
+    }
+
+    .container {
+        width: 100%;
+        margin: 0;
+    }
+
+    .form-card,
+    .download-actions {
+        display: none !important;
+    }
+
+    .table-card {
+        box-shadow: none;
+        border: none;
+    }
+
+    table {
+        border: 1px solid #000;
+    }
+
+    th,
+    td {
+        border: 1px solid #000;
     }
 }
