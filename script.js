@@ -66,7 +66,6 @@ let leaveMembers = new Set();
 const daySelect = document.getElementById("daySelect");
 const responsibilityInput = document.getElementById("responsibility");
 const memberPicker = document.getElementById("memberPicker");
-const otherInput = document.getElementById("other");
 const form = document.getElementById("dailyWorkForm");
 const submitButton = document.getElementById("submitButton");
 const cancelEditButton = document.getElementById("cancelEditButton");
@@ -111,8 +110,28 @@ function populateTaskSelect() {
     .join("");
 }
 
+function getUsedMembers(dayIndex) {
+  const used = new Set();
+
+  rows.forEach((item, index) => {
+    if (index === editingIndex) return;
+    if (item.day !== dayIndex) return;
+
+    item.names.forEach((name) => used.add(name));
+    (item.leave || []).forEach((name) => used.add(name));
+  });
+
+  return used;
+}
+
 function renderMemberPicker(dayIndex) {
-  const members = MEMBER_OF_EACH_DAY[dayIndex] || [];
+  const usedMembers = getUsedMembers(dayIndex);
+  const members = (MEMBER_OF_EACH_DAY[dayIndex] || []).filter((name) => !usedMembers.has(name));
+
+  if (members.length === 0) {
+    memberPicker.innerHTML = `<p class="member-picker-empty">សមាជិកទាំងអស់សម្រាប់ថ្ងៃនេះ ត្រូវបានចាត់តាំង ឬសុំច្បាប់រួចហើយ</p>`;
+    return;
+  }
 
   memberPicker.innerHTML = members
     .map((name) => {
@@ -124,7 +143,7 @@ function renderMemberPicker(dayIndex) {
             <span>${escapeHTML(name)}</span>
           </label>
           <button type="button" class="leave-toggle${onLeave ? " active" : ""}" data-name="${escapeHTML(name)}" onclick="toggleLeave(this)">
-            ${onLeave ? "✓ ស្នើសុំច្បាប់" : "ស្នើសុំច្បាប់"}
+            ${onLeave ? "✓ បានច្បាប់" : "ច្បាប់"}
           </button>
         </div>
       `;
@@ -151,7 +170,6 @@ function addRow() {
 
   const leave = Array.from(leaveMembers);
   const responsibility = responsibilityInput.value;
-  const other = otherInput.value.trim();
 
   if (names.length === 0 && leave.length === 0) {
     alert("សូមជ្រើសរើសអ្នកទទួលខុសត្រូវយ៉ាងហោចណាស់ម្នាក់!");
@@ -163,7 +181,7 @@ function addRow() {
     return;
   }
 
-  const entry = { day: Number(daySelect.value), names, leave, responsibility, other };
+  const entry = { day: Number(daySelect.value), names, leave, responsibility };
 
   if (editingIndex !== null) {
     rows[editingIndex] = entry;
@@ -204,7 +222,6 @@ function editRow(index) {
   });
 
   responsibilityInput.value = item.responsibility;
-  otherInput.value = item.other;
 
   submitButton.innerHTML = "✓ រក្សាទុកការកែប្រែ";
   cancelEditButton.style.display = "inline-flex";
@@ -228,31 +245,34 @@ function renderTable() {
 
   emptyState.style.display = "none";
 
-  rows.forEach((item, index) => {
-    const row = document.createElement("tr");
-    row.onclick = () => editRow(index);
-    if (index === editingIndex) row.classList.add("editing");
+  let personCounter = 0;
 
-    const assignedHTML = item.names
-      .map((name) => `<span class="person">${escapeHTML(name)}</span>`)
-      .join("");
+  rows.forEach((item, entryIndex) => {
+    const people = [
+      ...item.names.map((name) => ({ name, onLeave: false })),
+      ...(item.leave || []).map((name) => ({ name, onLeave: true }))
+    ];
 
-    const leaveHTML = (item.leave || [])
-      .map((name) => `<span class="person leave">${escapeHTML(name)} · ច្បាប់</span>`)
-      .join("");
+    people.forEach((person) => {
+      personCounter += 1;
 
-    const leaveLine = item.leave && item.leave.length
-      ? `<div class="other-leave-line">ច្បាប់៖ ${escapeHTML(item.leave.join(", "))}</div>`
-      : "";
+      const tr = document.createElement("tr");
+      tr.onclick = () => editRow(entryIndex);
+      if (entryIndex === editingIndex) tr.classList.add("editing");
 
-    row.innerHTML = `
-      <td data-label="ល.រ"><span class="row-index">${index + 1}</span></td>
-      <td data-label="អ្នកទទួលខុសត្រូវ"><div class="names">${assignedHTML}${leaveHTML}</div></td>
-      <td data-label="ការងារ"><div class="responsibility">${escapeHTML(item.responsibility)}</div></td>
-      <td data-label="ផ្សេងៗ"><div class="other">${item.other ? escapeHTML(item.other) : ""}</div>${leaveLine}</td>
-    `;
+      const nameClass = person.onLeave ? "person leave" : "person";
+      const taskText = person.onLeave ? "" : escapeHTML(item.responsibility);
+      const otherText = person.onLeave ? `<span class="leave-tag">ច្បាប់</span>` : "";
 
-    tableBody.appendChild(row);
+      tr.innerHTML = `
+        <td data-label="ល.រ"><span class="row-index">${personCounter}.</span></td>
+        <td data-label="គោត្តនាម និងនាម"><span class="${nameClass}">${escapeHTML(person.name)}</span></td>
+        <td data-label="ភារកិច្ច"><div class="responsibility">${taskText}</div></td>
+        <td data-label="ផ្សេងៗ">${otherText}</td>
+      `;
+
+      tableBody.appendChild(tr);
+    });
   });
 }
 

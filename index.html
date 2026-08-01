@@ -35,17 +35,7 @@
         <div class="form-group full-width">
           <label>អ្នកទទួលខុសត្រូវ<span class="required">*</span></label>
           <div id="memberPicker" class="member-picker"></div>
-          <small>ធីកឈ្មោះអ្នកទទួលខុសត្រូវសម្រាប់ការងារនេះ។ ចុច "ស្នើសុំច្បាប់" បើសមាជិកម្នាក់ណាសុំច្បាប់ថ្ងៃនោះ</small>
-        </div>
-
-        <div class="form-group full-width">
-          <label for="other">ផ្សេងៗ</label>
-          <textarea
-            id="other"
-            name="other"
-            rows="3"
-            placeholder="បញ្ចូលព័ត៌មានផ្សេងៗ..."
-          ></textarea>
+          <small>ធីកឈ្មោះអ្នកទទួលខុសត្រូវសម្រាប់ការងារនេះ។ ចុច "ស្នើសុំច្បាប់" បើសមាជិកម្នាក់ណាសុំច្បាប់ថ្ងៃនោះ។ អ្នកដែលបានចាត់តាំង ឬសុំច្បាប់រួចនឹងលែងបង្ហាញនៅទីនេះទៀត</small>
         </div>
 
       </div>
@@ -58,12 +48,24 @@
     </form>
   </section>
 
-  <section class="card table-card">
-    <div class="table-header">
-      <div>
+  <section class="card table-card document-style">
+    <div class="letterhead">
+      <div class="letterhead-brand">
+        <img class= "brand-logo" src="/image/logo1.png" alt="logo">
+        <div class="brand-name">
+          <p class="brand-name-km">សមាគមទាយាទខ្មែរ</p>
+          <p class="brand-name-en">KHMER HEIRS ASSOCIATION</p>
+        </div>
+      </div>
+      <Span></Span>
+      <div class="letterhead-title">
         <h2>វេនសម្អាតប្រចាំថ្ងៃ</h2>
         <p id="previewDate"></p>
       </div>
+    </div>
+
+    <div class="letterhead-divider">
+      <span>◆</span><span>◆</span><span>◆</span><span>◆</span><span>◆</span><span>◆</span><span>◆</span>
     </div>
 
     <div class="table-wrapper">
@@ -71,8 +73,8 @@
         <thead>
           <tr>
             <th>ល.រ</th>
-            <th>អ្នកទទួលខុសត្រូវ</th>
-            <th>ការងារ</th>
+            <th>គោត្តនាម និងនាម</th>
+            <th>ភារកិច្ច</th>
             <th>ផ្សេងៗ</th>
           </tr>
         </thead>
@@ -85,6 +87,8 @@
         <p>សូមបញ្ចូលអ្នកទទួលខុសត្រូវ និងការងារ</p>
       </div>
     </div>
+
+    <p class="letterhead-footer">អ្នកជាបុគ្គលសំខាន់!</p>
   </section>
 
   <section class="download-actions">
