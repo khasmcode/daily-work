@@ -4,12 +4,68 @@ const KHMER_MONTHS = [
   "កក្កដា", "សីហា", "កញ្ញា", "តុលា", "វិច្ឆិកា", "ធ្នូ"
 ];
 
+const DAY_LABELS = ["ថ្ងៃច័ន្ទ", "ថ្ងៃអង្គារ", "ថ្ងៃពុធ", "ថ្ងៃព្រហស្បតិ៍", "ថ្ងៃសុក្រ"];
+
+const MEMBER_OF_EACH_DAY = [
+  [
+    "កង ចាន់",
+    "ឆុន រដ្ឋា",
+    "វេន វិសាល",
+    "ស៊ាន សៀវ",
+    "នៅ សក្តា",
+    "ស្រ៊ុន សិរី"
+  ],
+  [
+    "ចក់ គឹមហ៊ាន",
+    "យូ សុវណ្ណារិទ្ធិ",
+    "ណន វ៉ានដា",
+    "ថេង ស៊ីវុង",
+    "រ៉ន ភាណុង",
+    "ថា សេងហ៊ាង"
+  ],
+  [
+    "ឆេង សុខា",
+    "ឈាន់ រ៉ាឆាត",
+    "កិ អង្គា",
+    "មឿន សុវណ្ណារ៉ា",
+    "ទា ចយ",
+    "សុខុន ខែមបូ"
+  ],
+  [
+    "សួស ធឿក",
+    "ងន វណ្ណេត",
+    "គ្រួច ចំរើន",
+    "ហ៊ឺ សង្ហី",
+    "ហេង ស៊ីហួន",
+    "ចែម វុធ"
+  ],
+  [
+    "ផាន់ណា មករា",
+    "តេង វាសនា",
+    "ចាន់ សុខវិសាល",
+    "វឿន កុសល្យ",
+    "ឡៃ វាសនា",
+    "ស៊ុន ឆាលី"
+  ]
+];
+
+const TASKS = [
+  "សម្អាតផ្ទះបាយ",
+  "សម្អាតបន្ទប់ទឹក",
+  "សម្អាតកន្លែងងូតទឹកខាងលើ",
+  "សម្អាតកន្លែងងូតទឹកខាងក្រោម",
+  "ចាក់សោរ និងបោសផ្ទះ",
+  "សម្អាតកន្លែងងូតទឹកខាងលើ និងខាងក្រោម"
+];
+
 let rows = [];
 let editingIndex = null;
 let suppressResetHandler = false;
+let leaveMembers = new Set();
 
-const nameInput = document.getElementById("name");
+const daySelect = document.getElementById("daySelect");
 const responsibilityInput = document.getElementById("responsibility");
+const memberPicker = document.getElementById("memberPicker");
 const otherInput = document.getElementById("other");
 const form = document.getElementById("dailyWorkForm");
 const submitButton = document.getElementById("submitButton");
@@ -19,7 +75,15 @@ const emptyState = document.getElementById("emptyState");
 
 document.addEventListener("DOMContentLoaded", () => {
   updateDate();
+  populateDaySelect();
+  populateTaskSelect();
+  renderMemberPicker(Number(daySelect.value));
   renderTable();
+
+  daySelect.addEventListener("change", () => {
+    leaveMembers = new Set();
+    renderMemberPicker(Number(daySelect.value));
+  });
 
   form.addEventListener("reset", () => {
     if (suppressResetHandler) return;
@@ -27,22 +91,79 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function addRow() {
-  const names = nameInput.value
-    .trim()
-    .split("\n")
-    .map((name) => name.trim())
-    .filter(Boolean);
+function getDefaultDayIndex() {
+  const weekday = new Date().getDay();
+  if (weekday >= 1 && weekday <= 5) return weekday - 1;
+  return 0;
+}
 
-  const responsibility = responsibilityInput.value.trim();
+function populateDaySelect() {
+  daySelect.innerHTML = DAY_LABELS
+    .map((label, index) => `<option value="${index}">${label}</option>`)
+    .join("");
+
+  daySelect.value = String(getDefaultDayIndex());
+}
+
+function populateTaskSelect() {
+  responsibilityInput.innerHTML = TASKS
+    .map((task) => `<option value="${escapeHTML(task)}">${escapeHTML(task)}</option>`)
+    .join("");
+}
+
+function renderMemberPicker(dayIndex) {
+  const members = MEMBER_OF_EACH_DAY[dayIndex] || [];
+
+  memberPicker.innerHTML = members
+    .map((name) => {
+      const onLeave = leaveMembers.has(name);
+      return `
+        <div class="member-row${onLeave ? " on-leave" : ""}">
+          <label class="member-check">
+            <input type="checkbox" class="member-checkbox" value="${escapeHTML(name)}" ${onLeave ? "disabled" : ""}>
+            <span>${escapeHTML(name)}</span>
+          </label>
+          <button type="button" class="leave-toggle${onLeave ? " active" : ""}" data-name="${escapeHTML(name)}" onclick="toggleLeave(this)">
+            ${onLeave ? "✓ ស្នើសុំច្បាប់" : "ស្នើសុំច្បាប់"}
+          </button>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function toggleLeave(button) {
+  const name = button.dataset.name;
+
+  if (leaveMembers.has(name)) {
+    leaveMembers.delete(name);
+  } else {
+    leaveMembers.add(name);
+  }
+
+  renderMemberPicker(Number(daySelect.value));
+}
+
+function addRow() {
+  const names = Array.from(memberPicker.querySelectorAll(".member-checkbox:checked")).map(
+    (checkbox) => checkbox.value
+  );
+
+  const leave = Array.from(leaveMembers);
+  const responsibility = responsibilityInput.value;
   const other = otherInput.value.trim();
 
-  if (names.length === 0 || !responsibility) {
-    alert("សូមបញ្ចូលអ្នកទទួលខុសត្រូវ និងការងារ!");
+  if (names.length === 0 && leave.length === 0) {
+    alert("សូមជ្រើសរើសអ្នកទទួលខុសត្រូវយ៉ាងហោចណាស់ម្នាក់!");
     return;
   }
 
-  const entry = { names, responsibility, other };
+  if (!responsibility) {
+    alert("សូមជ្រើសរើសការងារ!");
+    return;
+  }
+
+  const entry = { day: Number(daySelect.value), names, leave, responsibility, other };
 
   if (editingIndex !== null) {
     rows[editingIndex] = entry;
@@ -52,24 +173,36 @@ function addRow() {
 
   resetFormState();
   renderTable();
-  nameInput.focus();
 }
 
 function resetFormState() {
   editingIndex = null;
+  leaveMembers = new Set();
+
   submitButton.innerHTML = "＋ បន្ថែមការងារ";
   cancelEditButton.style.display = "none";
 
   suppressResetHandler = true;
   form.reset();
   suppressResetHandler = false;
+
+  daySelect.value = String(getDefaultDayIndex());
+  populateTaskSelect();
+  renderMemberPicker(Number(daySelect.value));
 }
 
 function editRow(index) {
   const item = rows[index];
   editingIndex = index;
+  leaveMembers = new Set(item.leave || []);
 
-  nameInput.value = item.names.join("\n");
+  daySelect.value = String(item.day);
+  renderMemberPicker(item.day);
+
+  memberPicker.querySelectorAll(".member-checkbox").forEach((checkbox) => {
+    checkbox.checked = item.names.includes(checkbox.value);
+  });
+
   responsibilityInput.value = item.responsibility;
   otherInput.value = item.other;
 
@@ -77,7 +210,6 @@ function editRow(index) {
   cancelEditButton.style.display = "inline-flex";
 
   renderTable();
-  nameInput.focus();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -101,15 +233,23 @@ function renderTable() {
     row.onclick = () => editRow(index);
     if (index === editingIndex) row.classList.add("editing");
 
-    const namesHTML = item.names
+    const assignedHTML = item.names
       .map((name) => `<span class="person">${escapeHTML(name)}</span>`)
       .join("");
 
+    const leaveHTML = (item.leave || [])
+      .map((name) => `<span class="person leave">${escapeHTML(name)} · ច្បាប់</span>`)
+      .join("");
+
+    const leaveLine = item.leave && item.leave.length
+      ? `<div class="other-leave-line">ច្បាប់៖ ${escapeHTML(item.leave.join(", "))}</div>`
+      : "";
+
     row.innerHTML = `
       <td data-label="ល.រ"><span class="row-index">${index + 1}</span></td>
-      <td data-label="អ្នកទទួលខុសត្រូវ"><div class="names">${namesHTML}</div></td>
+      <td data-label="អ្នកទទួលខុសត្រូវ"><div class="names">${assignedHTML}${leaveHTML}</div></td>
       <td data-label="ការងារ"><div class="responsibility">${escapeHTML(item.responsibility)}</div></td>
-      <td data-label="ផ្សេងៗ"><div class="other">${item.other ? escapeHTML(item.other) : ""}</div></td>
+      <td data-label="ផ្សេងៗ"><div class="other">${item.other ? escapeHTML(item.other) : ""}</div>${leaveLine}</td>
     `;
 
     tableBody.appendChild(row);

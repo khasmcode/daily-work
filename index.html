@@ -22,26 +22,20 @@
       <div class="form-grid">
 
         <div class="form-group">
-          <label for="name">អ្នកទទួលខុសត្រូវ<span class="required">*</span></label>
-          <textarea
-            id="name"
-            name="name"
-            rows="3"
-            placeholder="បញ្ចូលឈ្មោះអ្នកទទួលខុសត្រូវ&#10;ឧ. សុវណ្ណារ៉ា&#10;ដារ៉ា"
-            required
-          ></textarea>
-          <small>អាចបញ្ចូលមនុស្សច្រើននាក់សម្រាប់ការងារតែមួយ (មួយឈ្មោះក្នុងមួយបន្ទាត់)</small>
+          <label for="daySelect">ថ្ងៃធ្វើការងារ<span class="required">*</span></label>
+          <select id="daySelect"></select>
+          <small>ជ្រើសរើសថ្ងៃ ដើម្បីបង្ហាញឈ្មោះសមាជិកទទួលខុសត្រូវថ្ងៃនោះ</small>
         </div>
 
         <div class="form-group">
           <label for="responsibility">ការងារ<span class="required">*</span></label>
-          <textarea
-            id="responsibility"
-            name="responsibility"
-            rows="3"
-            placeholder="បញ្ចូលការងារដែលត្រូវធ្វើ..."
-            required
-          ></textarea>
+          <select id="responsibility" name="responsibility" required></select>
+        </div>
+
+        <div class="form-group full-width">
+          <label>អ្នកទទួលខុសត្រូវ<span class="required">*</span></label>
+          <div id="memberPicker" class="member-picker"></div>
+          <small>ធីកឈ្មោះអ្នកទទួលខុសត្រូវសម្រាប់ការងារនេះ។ ចុច "ស្នើសុំច្បាប់" បើសមាជិកម្នាក់ណាសុំច្បាប់ថ្ងៃនោះ</small>
         </div>
 
         <div class="form-group full-width">

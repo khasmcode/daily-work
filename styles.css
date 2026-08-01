@@ -155,6 +155,99 @@ textarea:focus {
   font-size: 12px;
 }
 
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Kantumruy Pro", sans-serif;
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+select:focus {
+  border-color: var(--mint);
+  background: var(--card);
+  box-shadow: 0 0 0 4px rgba(63, 143, 120, 0.12);
+}
+
+.member-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.member-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  border: 1px solid var(--line);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.member-row.on-leave {
+  background: #fdf1ec;
+  border-color: #f2c9b8;
+}
+
+.member-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.member-check input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--mint);
+  cursor: pointer;
+}
+
+.member-row.on-leave .member-check {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+}
+
+.leave-toggle {
+  border: 1.5px solid var(--coral);
+  background: transparent;
+  color: var(--coral);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.leave-toggle:hover {
+  background: rgba(224, 96, 63, 0.08);
+}
+
+.leave-toggle.active {
+  background: var(--coral);
+  color: #ffffff;
+}
+
 .form-actions {
   display: flex;
   gap: 10px;
@@ -366,6 +459,22 @@ tbody td:last-child {
   height: 6px;
   border-radius: 999px;
   background: var(--mint);
+}
+
+.person.leave {
+  background: #fdf1ec;
+  color: var(--coral-dark);
+}
+
+.person.leave::before {
+  background: var(--coral);
+}
+
+.other-leave-line {
+  margin-top: 6px;
+  font-weight: 700;
+  color: var(--coral-dark);
+  font-size: 13px;
 }
 
 .responsibility,
