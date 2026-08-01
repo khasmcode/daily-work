@@ -1,146 +1,107 @@
 <!DOCTYPE html>
 <html lang="km">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ការងារប្រចាំថ្ងៃ</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&family=Khim+Sonny&display=swap"
-        rel="stylesheet"
-    >
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>វេនសម្អាតប្រចាំថ្ងៃ</title>
+<link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main class="container">
-        <header class="page-header">
-            <div>
-                <h1>ការងារប្រចាំថ្ងៃ</h1>
-                <p>បញ្ចូលព័ត៌មានការងារប្រចាំថ្ងៃរបស់អ្នក</p>
-            </div>
-        </header>
+<main class="container">
 
-        <section class="form-card">
-            <form id="dailyWorkForm">
-                <div class="form-grid">
+  <header class="page-header">
+    <span class="eyebrow">🧹 កាលវិភាគសម្អាត</span>
+    <h1>វេនសម្អាតប្រចាំថ្ងៃ</h1>
+    <div class="underline"></div>
+    <p id="currentDate"></p>
+  </header>
 
-                    <div class="form-group">
-                        <label for="name">
-                            ឈ្មោះ <span>*</span>
-                        </label>
+  <section class="card form-card">
+    <form id="dailyWorkForm">
+      <div class="form-grid">
 
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            placeholder="បញ្ចូលឈ្មោះ"
-                            required
-                        >
-                    </div>
+        <div class="form-group">
+          <label for="name">អ្នកទទួលខុសត្រូវ<span class="required">*</span></label>
+          <textarea
+            id="name"
+            name="name"
+            rows="3"
+            placeholder="បញ្ចូលឈ្មោះអ្នកទទួលខុសត្រូវ&#10;ឧ. សុវណ្ណារ៉ា&#10;ដារ៉ា"
+            required
+          ></textarea>
+          <small>អាចបញ្ចូលមនុស្សច្រើននាក់សម្រាប់ការងារតែមួយ (មួយឈ្មោះក្នុងមួយបន្ទាត់)</small>
+        </div>
 
-                    <div class="form-group">
-                        <label for="responsibility">
-                            ការងារ <span>*</span>
-                        </label>
+        <div class="form-group">
+          <label for="responsibility">ការងារ<span class="required">*</span></label>
+          <textarea
+            id="responsibility"
+            name="responsibility"
+            rows="3"
+            placeholder="បញ្ចូលការងារដែលត្រូវធ្វើ..."
+            required
+          ></textarea>
+        </div>
 
-                        <textarea
-                            id="responsibility"
-                            name="responsibility"
-                            rows="3"
-                            placeholder="បញ្ចូលការងារដែលបានធ្វើ..."
-                            required
-                        ></textarea>
-                    </div>
+        <div class="form-group full-width">
+          <label for="other">ផ្សេងៗ</label>
+          <textarea
+            id="other"
+            name="other"
+            rows="3"
+            placeholder="បញ្ចូលព័ត៌មានផ្សេងៗ..."
+          ></textarea>
+        </div>
 
-                    <div class="form-group full-width">
-                        <label for="other">
-                            ផ្សេងៗ
-                        </label>
+      </div>
 
-                        <textarea
-                            id="other"
-                            name="other"
-                            rows="3"
-                            placeholder="បញ្ចូលព័ត៌មានផ្សេងៗ..."
-                        ></textarea>
-                    </div>
+      <div class="form-actions">
+        <button type="button" id="submitButton" class="btn btn-primary" onclick="addRow()">＋ បន្ថែមការងារ</button>
+        <button type="button" id="cancelEditButton" class="btn btn-secondary" onclick="cancelEdit()" style="display: none;">បោះបង់ការកែប្រែ</button>
+        <button type="reset" class="btn btn-light">សម្អាត</button>
+      </div>
+    </form>
+  </section>
 
-                </div>
+  <section class="card table-card">
+    <div class="table-header">
+      <div>
+        <h2>វេនសម្អាតប្រចាំថ្ងៃ</h2>
+        <p id="previewDate"></p>
+      </div>
+    </div>
 
-                <div class="form-actions">
-                    <button
-                        type="button"
-                        class="btn btn-primary"
-                        onclick="addRow()"
-                    >
-                        <span>＋</span>
-                        បន្ថែមជួរ
-                    </button>
+    <div class="table-wrapper">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th>ល.រ</th>
+            <th>អ្នកទទួលខុសត្រូវ</th>
+            <th>ការងារ</th>
+            <th>ផ្សេងៗ</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
 
-                    <button
-                        type="reset"
-                        class="btn btn-secondary"
-                    >
-                        សម្អាត
-                    </button>
-                </div>
-            </form>
-        </section>
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">🧹</div>
+        <h3>មិនទាន់មានការងារ</h3>
+        <p>សូមបញ្ចូលអ្នកទទួលខុសត្រូវ និងការងារ</p>
+      </div>
+    </div>
+  </section>
 
-        <section class="table-card">
-            <div class="table-header">
-                <div>
-                    <h2>បញ្ជីការងារប្រចាំថ្ងៃ</h2>
-                    <p id="rowCount">ចំនួន 0 ជួរ</p>
-                </div>
-            </div>
-            <div class="table-wrapper">
-                <table id="dataTable">
-                    <thead>
-                        <tr>
-                            <th class="number-column">ល.រ</th>
-                            <th>ឈ្មោះ</th>
-                            <th>ការងារ</th>
-                            <th>ផ្សេងៗ</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <div id="emptyState" class="empty-state">
-                    <div class="empty-icon">📋</div>
-                    <h3>មិនទាន់មានទិន្នន័យ</h3>
-                    <p>សូមបញ្ចូលព័ត៌មានខាងលើ ហើយចុច "បន្ថែមជួរ"</p>
-                </div>
-            </div>
-        </section>
+  <section class="download-actions">
+    <button type="button" class="btn btn-success" onclick="downloadAsImage()">ទាញយកជារូបភាព</button>
+    <button type="button" class="btn btn-danger" onclick="downloadAsPDF()">ទាញយកជា PDF</button>
+  </section>
 
+</main>
 
-        <section class="download-actions">
-            <button
-                type="button"
-                class="btn btn-success"
-                onclick="downloadAsImage()"
-            >
-                ទាញយកជារូបភាព
-            </button>
-
-            <button
-                type="button"
-                class="btn btn-danger"
-                onclick="downloadAsPDF()"
-            >
-                ទាញយកជា PDF
-            </button>
-        </section>
-    </main>
-
-    <!-- Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <!-- Your JavaScript -->
-    <script src="script.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
