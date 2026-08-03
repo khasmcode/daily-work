@@ -94,6 +94,7 @@ const memberPicker = document.getElementById("memberPicker");
 const form = document.getElementById("dailyWorkForm");
 const submitButton = document.getElementById("submitButton");
 const cancelEditButton = document.getElementById("cancelEditButton");
+const deleteButton = document.getElementById("deleteButton");
 const tableBody = document.getElementById("tableBody");
 const emptyState = document.getElementById("emptyState");
 
@@ -275,6 +276,7 @@ function resetFormState() {
 
   submitButton.innerHTML = "＋ បន្ថែមការងារ";
   cancelEditButton.style.display = "none";
+  deleteButton.style.display = "none";
 
   suppressResetHandler = true;
 
@@ -311,6 +313,7 @@ function editRow(index) {
   submitButton.innerHTML = "✓ រក្សាទុកការកែប្រែ";
 
   cancelEditButton.style.display = "inline-flex";
+  deleteButton.style.display = "inline-flex";
 
   renderTable();
 
@@ -321,6 +324,19 @@ function editRow(index) {
 }
 
 function cancelEdit() {
+  resetFormState();
+  renderTable();
+}
+
+function deleteCurrentRow() {
+  if (editingIndex === null) return;
+
+  const confirmed = confirm("តើអ្នកចង់លុបការងារនេះមែនទេ?");
+
+  if (!confirmed) return;
+
+  rows.splice(editingIndex, 1);
+
   resetFormState();
   renderTable();
 }
